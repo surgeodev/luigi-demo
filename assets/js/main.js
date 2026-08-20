@@ -402,3 +402,53 @@ window.addEventListener("scroll", () => {
     l.classList.toggle("active", l.getAttribute("href") === "#" + current);
   });
 });
+/* ---------- Réservation WhatsApp ---------- */
+const resForm = document.getElementById("reservationForm");
+const resLabel = document.getElementById("resLabel");
+let resArmed = false, resTimer = null;
+function resReset() {
+  resArmed = false;
+  resLabel.textContent = "Réserver sur WhatsApp";
+  resSubmit.classList.remove("armed");
+}
+resForm && resForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const date = document.getElementById("res-date").value;
+  const time = document.getElementById("res-time").value;
+  const people = document.getElementById("res-people").value;
+  const name = document.getElementById("res-name").value.trim();
+  const phone = document.getElementById("res-phone").value.trim();
+  const email = document.getElementById("res-email").value.trim();
+  const msg = document.getElementById("res-msg").value.trim();
+  if (!date || !time || !name || !phone) {
+    resLabel.textContent = "Champs requis manquants";
+    setTimeout(resReset, 3000);
+    return;
+  }
+  if (!resArmed) {
+    resArmed = true;
+    resLabel.textContent = "Confirmer la réservation ?";
+    resSubmit.classList.add("armed");
+    clearTimeout(resTimer);
+    resTimer = setTimeout(resReset, 7000);
+    return;
+  }
+  clearTimeout(resTimer);
+  const d = date.split("-");
+  const prettyDate = d.length === 3 ? d[2] + "/" + d[1] + "/" + d[0] : date;
+  const lines = [
+    "Réservation Luigi Sidi Maarouf",
+    "—",
+    "Date : " + prettyDate,
+    "Heure : " + time,
+    "Personne(s) : " + people,
+    "Nom : " + name,
+    "Téléphone : " + phone
+  ];
+  if (email) lines.push("Email : " + email);
+  if (msg) lines.push("Message : " + msg);
+  const text = "Bonjour Luigi Sidi Maarouf," + "\n" + lines.join("\n");
+  window.open("https://wa.me/" + WA_NUMBER + "?text=" + encodeURIComponent(text), "_blank");
+  resLabel.textContent = "Envoyé ✓ Quelle présence ?";
+  setTimeout(resReset, 2600);
+});
