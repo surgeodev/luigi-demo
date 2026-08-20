@@ -3,7 +3,7 @@
 # Génère les 4 pages du site Luigi avec header/footer partagés
 import re
 
-CSS_VER = 9
+CSS_VER = 10
 
 HEAD = """<!DOCTYPE html>
 <html lang="fr">
@@ -382,11 +382,18 @@ menu = render(
     <div class="cart-items" id="cartItems"></div>
     <div class="cart-footer">
       <div class="cart-total"><span>Total</span><span id="cartTotal">0 DH</span></div>
+      <p class="promo-line" id="promoLine" hidden></p>
       <div class="checkout-box" id="checkoutBox">
         <div class="co-type">
           <button type="button" class="co-type-btn active" data-type="livraison">🚚 Livraison</button>
           <button type="button" class="co-type-btn" data-type="emporter">🥡 À emporter</button>
         </div>
+        <label class="co-label" for="promoInput">Code promo</label>
+        <div class="promo-row">
+          <input class="co-input" type="text" id="promoInput" placeholder="Ex : LUIGI10" autocomplete="off">
+          <button type="button" class="btn-add promo-btn" id="promoBtn">Appliquer</button>
+        </div>
+        <p class="promo-msg" id="promoMsg"></p>
         <label class="co-label" for="coName">Nom complet</label>
         <input class="co-input" type="text" id="coName" placeholder="Votre nom" required>
         <label class="co-label" for="coPhone">Téléphone</label>

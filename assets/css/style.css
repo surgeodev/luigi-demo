@@ -332,6 +332,26 @@ section[id] { scroll-margin-top: 90px; }
 
 /* ---------- Checkout dans le panier ---------- */
 .checkout-box { margin-bottom: 14px; }
+.promo-row {
+  display: flex; gap: 8px;
+}
+.promo-row .co-input { flex: 1; }
+.promo-btn {
+  white-space: nowrap; padding: 10px 16px;
+  font-size: 12px;
+}
+.promo-msg {
+  margin: 6px 4px 0;
+  font-size: 12px; font-weight: 700;
+}
+.promo-msg.ok { color: var(--green); }
+.promo-msg.warn { color: var(--red); }
+.promo-line {
+  margin: 6px 0 10px;
+  font-size: 12.5px; font-weight: 800;
+  color: var(--red);
+  text-align: right;
+}
 .co-type { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px; }
 .co-type-btn {
   border: 1.5px solid var(--line);

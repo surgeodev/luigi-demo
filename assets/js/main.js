@@ -286,6 +286,44 @@ if (grid && tabs) {
     return t;
   }
 
+  /* ---------- Codes promo ---------- */
+  const PROMOS = { LUIGI10: 10, PASTA15: 15, FAMILLE20: 20 };
+  let promo = null;
+  const promoInput = document.getElementById("promoInput");
+  const promoBtn = document.getElementById("promoBtn");
+  const promoMsg = document.getElementById("promoMsg");
+  const promoLine = document.getElementById("promoLine");
+
+  function promoDiscount() {
+    if (!promo || !PROMOS[promo]) return 0;
+    return Math.round((cartTotalPrice() * PROMOS[promo]) / 100);
+  }
+  function netTotal() {
+    return cartTotalPrice() - promoDiscount();
+  }
+  function applyPromo() {
+    if (!promoInput) return;
+    const raw = promoInput.value.trim().toUpperCase();
+    if (!raw) {
+      promoMsg.textContent = "Entrez un code pour profiter d'une réduction.";
+      promoMsg.className = "promo-msg warn";
+      return;
+    }
+    if (PROMOS[raw]) {
+      promo = raw;
+      promoMsg.textContent = "Code appliqué : " + raw + " (-" + PROMOS[raw] + "%)";
+      promoMsg.className = "promo-msg ok";
+    } else {
+      promo = null;
+      promoMsg.textContent = "Code invalide. Essayez : LUIGI10, PASTA15 ou FAMILLE20";
+      promoMsg.className = "promo-msg warn";
+    }
+    syncUI();
+    updateDrawer();
+  }
+  if (promoBtn) promoBtn.addEventListener("click", applyPromo);
+  if (promoInput) promoInput.addEventListener("keydown", (e) => { if (e.key === "Enter") applyPromo(); });
+
   function syncUI() {
     const count = cartCount();
     cartBadge.textContent = count;
@@ -368,11 +406,14 @@ if (grid && tabs) {
         "🍽️ NOUVELLE COMMANDE — Luigi " + locName(),
         "Mode : " + type.toUpperCase(),
         items.join("\n"),
-        "Total : " + cartTotalPrice() + " DH",
-        "Paiement : " + pay,
-        "Nom : " + name,
-        "Téléphone : " + phone,
+        "Sous-total : " + cartTotalPrice() + " DH",
       ];
+      if (promo && cartCount()) {
+        orderLines.push("Promo " + promo + " : -" + promoDiscount() + " DH");
+      }
+      orderLines.push("Total : " + netTotal() + " DH");
+      orderLines.push("Paiement : " + pay);
+      orderLines.push("Nom : " + name, "Téléphone : " + phone);
       if (type === "livraison" && addr) orderLines.push("Adresse : " + addr);
       orderLines.push("— Confirmation au plus vite, merci !");
       sendLoc("NOUVELLE COMMANDE — Luigi " + locName(), null, orderLines);
@@ -410,7 +451,15 @@ if (grid && tabs) {
         <button class="cart-remove" data-action="remove" data-key="${key}" aria-label="Retirer">&times;</button>`;
       cartItems.appendChild(row);
     });
-    cartTotal.textContent = cartTotalPrice() + " DH";
+    cartTotal.textContent = netTotal() + " DH";
+    if (promoLine) {
+      if (promo && cartCount()) {
+        promoLine.hidden = false;
+        promoLine.textContent = "Promo " + promo + " : -" + promoDiscount() + " DH";
+      } else {
+        promoLine.hidden = true;
+      }
+    }
     if (cartOrder) cartOrder.disabled = false;
   };
   cartItems && cartItems.addEventListener("click", (e) => {

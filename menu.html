@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Lato:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/style.css?v=9">
+  <link rel="stylesheet" href="assets/css/style.css?v=10">
 </head>
 <body>
   <div class="demo-strip">Démo de refonte — réalisée sur mesure · version finale livrée sur votre domaine luigi.ma</div>
@@ -93,11 +93,18 @@
     <div class="cart-items" id="cartItems"></div>
     <div class="cart-footer">
       <div class="cart-total"><span>Total</span><span id="cartTotal">0 DH</span></div>
+      <p class="promo-line" id="promoLine" hidden></p>
       <div class="checkout-box" id="checkoutBox">
         <div class="co-type">
           <button type="button" class="co-type-btn active" data-type="livraison">🚚 Livraison</button>
           <button type="button" class="co-type-btn" data-type="emporter">🥡 À emporter</button>
         </div>
+        <label class="co-label" for="promoInput">Code promo</label>
+        <div class="promo-row">
+          <input class="co-input" type="text" id="promoInput" placeholder="Ex : LUIGI10" autocomplete="off">
+          <button type="button" class="btn-add promo-btn" id="promoBtn">Appliquer</button>
+        </div>
+        <p class="promo-msg" id="promoMsg"></p>
         <label class="co-label" for="coName">Nom complet</label>
         <input class="co-input" type="text" id="coName" placeholder="Votre nom" required>
         <label class="co-label" for="coPhone">Téléphone</label>
@@ -158,6 +165,6 @@
     </div>
   </footer>
 
-<script src="assets/js/menu_data.js?v=9"></script>  <script src="assets/js/main.js?v=9"></script>
+<script src="assets/js/menu_data.js?v=10"></script>  <script src="assets/js/main.js?v=10"></script>
 </body>
 </html>
