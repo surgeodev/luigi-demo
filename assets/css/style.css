@@ -203,7 +203,7 @@ section[id] { scroll-margin-top: 90px; }
 .loc-select {
   background: rgba(255, 255, 255, 0.12);
   border: 1px solid rgba(255, 255, 255, 0.35);
-  color: var(--white);
+  color: var(--surface);
   font: inherit;
   font-size: 13px;
   padding: 3px 6px;
@@ -213,7 +213,7 @@ section[id] { scroll-margin-top: 90px; }
 }
 .loc-select option {
   color: var(--ink);
-  background: var(--white);
+  background: var(--surface);
 }
 @media (max-width: 640px) {
   .topbar-loc label {
@@ -225,7 +225,7 @@ section[id] { scroll-margin-top: 90px; }
 }
 
 .addresses-section {
-  background: var(--paper);
+  background: var(--ivory);
 }
 .addresses-grid {
   display: grid;
@@ -234,7 +234,7 @@ section[id] { scroll-margin-top: 90px; }
   margin-top: 34px;
 }
 .address-card {
-  background: var(--white);
+  background: var(--surface);
   border-radius: 14px;
   padding: 26px 22px;
   text-align: center;
@@ -249,7 +249,7 @@ section[id] { scroll-margin-top: 90px; }
   border-color: var(--red);
 }
 .address-card h3 {
-  font-family: var(--font-serif);
+  font-family: var(--serif);
   font-size: 1.35rem;
   margin-bottom: 8px;
   color: var(--green);

@@ -107,8 +107,8 @@ def render(title, desc, body, home="", menu="", resa="", contact=""):
 
 # ---------- PAGE ACCUEIL ----------
 index = render(
-    "Luigi Sidi Maarouf — Restaurant italien Casablanca | Pizzas, Pâtes fraîches, Grillades",
-    "Luigi Sidi Maarouf, Casablanca : pizzas, pâtes fraîches, viandes grillées, fruits de mer. Restauration chaude non-stop de midi à minuit. Commandez en ligne.",
+    "Luigi — Restaurant italien | Pizzas, Pâtes fraîches, Grillades",
+    "Luigi : pizzas, pâtes fraîches, viandes grillées, fruits de mer. Chaîne italienne au Maroc — 7 adresses, restauration non-stop de midi à minuit. Commandez en ligne.",
     home=' active',
     body="""
   <section class="hero" id="accueil">
@@ -328,7 +328,7 @@ index = render(
 
 # ---------- PAGE MENU ----------
 menu = render(
-    "Menu — Luigi Sidi Maarouf | Pizzas, Pâtes fraîches, Grillades en ligne",
+    "Menu — Luigi | Pizzas, Pâtes fraîches, Grillades en ligne",
     "Le menu complet du Luigi Sidi Maarouf : plus de 140 plats italiens avec photos et prix. Commandez en ligne, payez par carte ou à la livraison.",
     menu=' active',
     body="""
@@ -403,8 +403,8 @@ menu = render(
 
 # ---------- PAGE RÉSERVATION ----------
 resa = render(
-    "Réservation — Luigi Sidi Maarouf | Réservez votre table en ligne",
-    "Réservez votre table au Luigi Sidi Maarouf en ligne : date, heure, nombre de personnes. Confirmation immédiate sur WhatsApp.",
+    "Réservation — Luigi | Réservez votre table en ligne",
+    "Réservez votre table au Luigi en ligne : date, heure, nombre de personnes. Confirmation immédiate sur WhatsApp.",
     resa=' active',
     body="""
   <section class="page-head">
@@ -503,7 +503,7 @@ resa = resa.replace("__SLOTS__", "\n".join(f'<option value="{s}">{s}</option>' f
 
 # ---------- PAGE CONTACT ----------
 contact = render(
-    "Contact — Luigi Sidi Maarouf | Téléphone, WhatsApp, horaires, plan d'accès",
+    "Contact — Luigi | Téléphone, WhatsApp, adresses",
     "Contactez le Luigi Sidi Maarouf à Casablanca : téléphone, WhatsApp, email, horaires et plan d'accès. Une question, un événement, un menu d'entreprise ?",
     contact=' active',
     body="""
