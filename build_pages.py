@@ -24,7 +24,15 @@ HEAD = """<!DOCTYPE html>
   <div class="topbar">
     <div class="container topbar-inner">
       <span>Restauration chaude non-stop · 7j/7 de midi à minuit</span>
-      <span>Réservation : <a href="tel:+212522787171">05 22 78 71 71</a> <span class="flag"><span></span><span></span><span></span></span></span>
+      <span>Réservation : <a id="topPhoneLink" href="tel:+212522787171">05 22 78 71 71</a></span>
+      <span class="topbar-loc">
+        <label for="locSelect">Nos adresses</label>
+        <select id="locSelect" class="loc-select">
+          <option value="sidimaarouf">Luigi Sidi Maarouf</option>
+          <option value="maarif">Luigi Maarif</option>
+          <option value="darbouazza">Luigi Dar Bouazza</option>
+        </select>
+      </span>
     </div>
   </div>
 
@@ -51,7 +59,7 @@ FOOT = """  <footer class="footer">
       <div class="footer-grid">
         <div class="footer-col">
           <img src="assets/img/logo.png" alt="Luigi" class="footer-logo">
-          <h3>Luigi Sidi Maarouf</h3>
+          <h3 id="footerName">Luigi Sidi Maarouf</h3>
           <span class="flag-stripe"><span></span><span></span><span></span></span>
           <p class="footer-about">Dans un cadre typiquement raffiné, le restaurant italien le plus réputé du Royaume : pizzas au four, pâtes fraîches maison, grillades et fruits de mer.</p>
         </div>
@@ -74,10 +82,10 @@ FOOT = """  <footer class="footer">
         </div>
         <div class="footer-col">
           <h4>Contact</h4>
-          <p class="footer-line">Téléphone : <a href="tel:+212522787171">05 22 78 71 71</a></p>
-          <p class="footer-line">WhatsApp : <a href="https://wa.me/212661489955" target="_blank" rel="noopener">06 61 48 99 55</a></p>
-          <p class="footer-line">Email : <a href="mailto:contact@luigi.ma">contact@luigi.ma</a></p>
-          <p class="footer-line">Rue 40, N° 4, Lot Mandarona, Sidi Maarouf, Casablanca</p>
+          <p class="footer-line">Téléphone : <a id="footerPhone" href="tel:+212522787171">05 22 78 71 71</a></p>
+          <p class="footer-line">WhatsApp : <a id="footerWa" href="https://wa.me/212661489955" target="_blank" rel="noopener">06 61 48 99 55</a></p>
+          <p class="footer-line">Email : <a id="footerEmail" href="mailto:contact@luigi.ma">contact@luigi.ma</a></p>
+          <p class="footer-line" id="footerAddr">Rue 40, N° 4, Lot Mandarona, Sidi Maarouf, Casablanca</p>
           <p class="footer-line">7j/7 · de midi à minuit, non-stop</p>
         </div>
       </div>
@@ -108,8 +116,8 @@ index = render(
       <img src="assets/img/Luigi-slider-1.jpg" alt="L'ambiance du restaurant Luigi">
     </div>
     <div class="hero-content">
-      <span class="hero-badge">Ristorante Italiano · Sidi Maarouf, Casablanca</span>
-      <h1>Luigi <span>Sidi Maarouf</span></h1>
+      <span class="hero-badge"><span id="locBadge">Ristorante Italiano · Sidi Maarouf, Casablanca</span></span>
+      <h1>Luigi <span id="locName">Sidi Maarouf</span></h1>
       <p class="hero-tag">Pizzas · Pâtes fraîches maison · Grillades · Fruits de mer — <strong>7j/7 · midi à minuit</strong></p>
       <div class="hero-cta">
         <a href="menu.html" class="btn btn-primary">
@@ -242,6 +250,37 @@ index = render(
         <img src="assets/img/photo-6.jpg" alt="Luigi dégustation">
         <img src="assets/img/photo-7.jpg" alt="Luigi intérieur">
         <img src="assets/img/photo-8.jpg" alt="Luigi plats">
+      </div>
+    </div>
+  </section>
+
+  <section class="addresses-section">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-tag">Un seul design, trois adresses</span>
+        <h2>La marque Luigi, unifiée</h2>
+        <span class="flag-stripe"><span></span><span></span><span></span></span>
+        <p>Cliquez sur une adresse : le site s'adapte instantanément. C'est le principe d'une marque harmonisée — vos clients retrouvent la même expérience partout.</p>
+      </div>
+      <div class="addresses-grid">
+        <div class="address-card" data-loc="sidimaarouf">
+          <h3>Luigi Sidi Maarouf</h3>
+          <p>Rue 40, N° 4, Lot Mandarona, Sidi Maarouf, Casablanca</p>
+          <p class="address-tel">05 22 78 71 71</p>
+          <button class="btn-add">Choisir cette adresse</button>
+        </div>
+        <div class="address-card" data-loc="maarif">
+          <h3>Luigi Maarif</h3>
+          <p>17, rue Normandie, Maarif — Casablanca</p>
+          <p class="address-tel">05 22 39 02 71</p>
+          <button class="btn-add">Choisir cette adresse</button>
+        </div>
+        <div class="address-card" data-loc="darbouazza">
+          <h3>Luigi Dar Bouazza</h3>
+          <p>Centre Mercato, Dar Bouazza</p>
+          <p class="address-tel">05 22 33 06 24</p>
+          <button class="btn-add">Choisir cette adresse</button>
+        </div>
       </div>
     </div>
   </section>
@@ -410,11 +449,11 @@ __SLOTS__
         <div class="reservation-info">
           <div class="contact-card">
             <h3>Réservation par téléphone</h3>
-            <p><a href="tel:+212522787171">05 22 78 71 71</a></p>
+            <p><a id="resaPhone" href="tel:+212522787171">05 22 78 71 71</a></p>
           </div>
           <div class="contact-card">
             <h3>WhatsApp réservation</h3>
-            <p><a href="https://wa.me/212661489955">06 61 48 99 55</a></p>
+            <p><a id="resaWa" href="https://wa.me/212661489955">06 61 48 99 55</a></p>
           </div>
           <div class="contact-card">
             <h3>Horaires</h3>
@@ -490,15 +529,15 @@ contact = render(
         <div class="contact-map-wrap">
           <div class="contact-card">
             <h3>Téléphone</h3>
-            <p><a href="tel:+212522787171">05 22 78 71 71</a></p>
+            <p><a id="ctPhone" href="tel:+212522787171">05 22 78 71 71</a></p>
           </div>
           <div class="contact-card">
             <h3>WhatsApp</h3>
-            <p><a href="https://wa.me/212661489955">06 61 48 99 55</a></p>
+            <p><a id="ctWa" href="https://wa.me/212661489955">06 61 48 99 55</a></p>
           </div>
           <div class="contact-card">
             <h3>Email</h3>
-            <p><a href="mailto:contact@luigi.ma">contact@luigi.ma</a></p>
+            <p><a id="ctEmail" href="mailto:contact@luigi.ma">contact@luigi.ma</a></p>
           </div>
           <div class="contact-card">
             <h3>Horaires</h3>
@@ -506,10 +545,10 @@ contact = render(
           </div>
           <div class="contact-card">
             <h3>Adresse</h3>
-            <p>Rue 40, N° 4, Lot Mandarona, Sidi Maarouf, Casablanca</p>
+            <p id="ctAddr">Rue 40, N° 4, Lot Mandarona, Sidi Maarouf, Casablanca</p>
           </div>
           <div class="contact-map">
-            <iframe src="https://maps.google.com/maps?q=Luigi%20Sidi%20Maarouf%20Casablanca&amp;t=&amp;z=15&amp;ie=UTF8&amp;iwloc=&amp;output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Luigi Sidi Maarouf sur Google Maps"></iframe>
+            <iframe id="ctMap" src="https://maps.google.com/maps?q=Luigi%20Sidi%20Maarouf%20Casablanca&amp;t=&amp;z=15&amp;ie=UTF8&amp;iwloc=&amp;output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Luigi Sidi Maarouf sur Google Maps"></iframe>
           </div>
         </div>
       </div>

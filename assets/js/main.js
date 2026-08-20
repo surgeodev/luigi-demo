@@ -30,6 +30,126 @@ if (toggle && nav) {
   spy();
 })();
 
+/* ============ Unification : 3 adresses Luigi ============ */
+const LOCATIONS = {
+  sidimaarouf: {
+    name: "Sidi Maarouf",
+    badge: "Ristorante Italiano · Sidi Maarouf, Casablanca",
+    phone: "05 22 78 71 71",
+    phoneHref: "tel:+212522787171",
+    wa: "212661489955",
+    waDisplay: "06 61 48 99 55",
+    email: "contact@luigi.ma",
+    addr: "Rue 40, N° 4, Lot Mandarona, Sidi Maarouf, Casablanca",
+    map: "https://maps.google.com/maps?q=Luigi%20Sidi%20Maarouf%20Casablanca&t=&z=15&ie=UTF8&iwloc=&output=embed",
+  },
+  maarif: {
+    name: "Maarif",
+    badge: "Ristorante Italiano · Maarif, Casablanca",
+    phone: "05 22 39 02 71",
+    phoneHref: "tel:+212522390271",
+    wa: "212661489955",
+    waDisplay: "06 61 48 99 55",
+    email: "contact@luigi.ma",
+    addr: "17, rue Normandie, Maarif — Casablanca",
+    map: "https://maps.google.com/maps?q=Luigi%20Maarif%20Casablanca&t=&z=15&ie=UTF8&iwloc=&output=embed",
+  },
+  darbouazza: {
+    name: "Dar Bouazza",
+    badge: "Ristorante Italiano · Dar Bouazza",
+    phone: "05 22 33 06 24",
+    phoneHref: "tel:+212522330624",
+    wa: null,
+    waDisplay: "05 22 33 06 24",
+    email: "luigi@luigidarbouazza.ma",
+    addr: "Centre Mercato, Dar Bouazza",
+    map: "https://maps.google.com/maps?q=Centre%20Mercato%20Dar%20Bouazza%20Casablanca&t=&z=15&ie=UTF8&iwloc=&output=embed",
+  },
+};
+
+function locGet() {
+  try {
+    return localStorage.getItem("luigi-loc") || "sidimaarouf";
+  } catch (e) {
+    return "sidimaarouf";
+  }
+}
+let CURRENT_LOC = locGet();
+
+function applyLocation(k) {
+  const l = LOCATIONS[k];
+  if (!l) return;
+  try {
+    localStorage.setItem("luigi-loc", k);
+  } catch (e) {}
+  CURRENT_LOC = k;
+  const sel = document.getElementById("locSelect");
+  if (sel && sel.value !== k) sel.value = k;
+  const text = (id, t) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = t;
+  };
+  const href = (id, h) => {
+    const el = document.getElementById(id);
+    if (el) el.setAttribute("href", h);
+  };
+  text("locName", l.name);
+  text("locBadge", l.badge);
+  text("topPhoneLink", l.phone);
+  href("topPhoneLink", l.phoneHref);
+  text("footerName", "Luigi " + l.name);
+  text("footerAddr", l.addr);
+  text("footerEmail", l.email);
+  href("footerEmail", "mailto:" + l.email);
+  const waHref = l.wa ? "https://wa.me/" + l.wa : "mailto:" + l.email;
+  text("footerWa", l.waDisplay);
+  href("footerWa", waHref);
+  text("resaPhone", l.phone);
+  href("resaPhone", l.phoneHref);
+  text("resaWa", l.waDisplay);
+  href("resaWa", waHref);
+  text("ctPhone", l.phone);
+  href("ctPhone", l.phoneHref);
+  text("ctWa", l.waDisplay);
+  href("ctWa", waHref);
+  text("ctEmail", l.email);
+  href("ctEmail", "mailto:" + l.email);
+  text("ctAddr", l.addr);
+  const map = document.getElementById("ctMap");
+  if (map) map.setAttribute("src", l.map);
+  document.querySelectorAll(".address-card").forEach((c) => {
+    c.classList.toggle("active-loc", c.dataset.loc === k);
+  });
+}
+
+const locSel = document.getElementById("locSelect");
+if (locSel) {
+  locSel.addEventListener("change", (e) => applyLocation(e.target.value));
+  document.querySelectorAll(".address-card").forEach((card) => {
+    const btn = card.querySelector("button");
+    if (btn) btn.addEventListener("click", () => applyLocation(card.dataset.loc));
+  });
+  applyLocation(CURRENT_LOC);
+}
+
+function locName() {
+  const l = LOCATIONS[CURRENT_LOC];
+  return l ? l.name : "Sidi Maarouf";
+}
+
+function sendLoc(subject, greet, lines) {
+  const l = LOCATIONS[CURRENT_LOC];
+  const body = (greet ? greet + ",\n" : "") + lines.join("\n");
+  if (l.wa) {
+    window.open("https://wa.me/" + l.wa + "?text=" + encodeURIComponent(body), "_blank");
+  } else {
+    window.open(
+      "mailto:" + l.email + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body),
+      "_blank"
+    );
+  }
+}
+
 /* ============ Panier (page menu) ============ */
 const grid = document.getElementById("menuGrid");
 const cartFab = document.getElementById("cartFab");
@@ -194,23 +314,22 @@ if (grid && tabs) {
       const type = document.querySelector(".co-type-btn.active").dataset.type;
       const addr = document.getElementById("coAddr").value.trim();
       const pay = document.querySelector(".pay-choice.active").dataset.pay;
-      const lines = Object.entries(CART)
-        .map(([key, q]) => {
-          const it = ALL[key];
-          return `  • ${q} × ${it.name} — ${it.price * q} DH`;
-        })
-        .join("\n");
-      const msg =
-        "🍽️ NOUVELLE COMMANDE — Luigi Sidi Maarouf\n" +
-        "Mode : " + type.toUpperCase() +
-        "\n" + lines +
-        `\n\nTotal : ${cartTotalPrice()} DH` +
-        "\nPaiement : " + pay +
-        "\nNom : " + name +
-        "\nTéléphone : " + phone +
-        (type === "livraison" && addr ? "\nAdresse : " + addr : "") +
-        "\n— Confirmation au plus vite, merci !";
-      window.open("https://wa.me/212661489955?text=" + encodeURIComponent(msg), "_blank");
+      const items = Object.entries(CART).map(([key, q]) => {
+        const it = ALL[key];
+        return `  • ${q} × ${it.name} — ${it.price * q} DH`;
+      });
+      const orderLines = [
+        "🍽️ NOUVELLE COMMANDE — Luigi " + locName(),
+        "Mode : " + type.toUpperCase(),
+        items.join("\n"),
+        "Total : " + cartTotalPrice() + " DH",
+        "Paiement : " + pay,
+        "Nom : " + name,
+        "Téléphone : " + phone,
+      ];
+      if (type === "livraison" && addr) orderLines.push("Adresse : " + addr);
+      orderLines.push("— Confirmation au plus vite, merci !");
+      sendLoc("NOUVELLE COMMANDE — Luigi " + locName(), null, orderLines);
       orderLabel.textContent = "Envoyé ✓";
       orderReset(true);
     });
@@ -301,7 +420,7 @@ if (resForm) {
     const d = date.split("-");
     const pretty = d.length === 3 ? `${d[2]}/${d[1]}/${d[0]}` : date;
     const lines = [
-      "Réservation Luigi Sidi Maarouf",
+      "Réservation Luigi " + locName(),
       "—",
       "Date : " + pretty,
       "Heure : " + time,
@@ -311,11 +430,7 @@ if (resForm) {
     ];
     if (email) lines.push("Email : " + email);
     if (msg) lines.push("Message : " + msg);
-    window.open(
-      "https://wa.me/212661489955?text=" +
-        encodeURIComponent("Bonjour Luigi Sidi Maarouf,\n" + lines.join("\n")),
-      "_blank"
-    );
+    sendLoc("Réservation — Luigi " + locName(), "Bonjour Luigi " + locName(), lines);
     resLabel.textContent = "Envoyé ✓";
     setTimeout(resReset, 2600);
   });
@@ -355,16 +470,13 @@ if (ctForm) {
     }
     clearTimeout(ctTimer);
     const lines = [
-      "Message site — Luigi Sidi Maarouf",
+      "Message site — Luigi " + locName(),
       "Sujet : " + topic,
       "Nom : " + name + (phone ? " | Tél : " + phone : ""),
       "Email : " + email,
       "Message : " + msg,
     ];
-    window.open(
-      "https://wa.me/212661489955?text=" + encodeURIComponent(lines.join("\n")),
-      "_blank"
-    );
+    sendLoc("Message site — Luigi " + locName(), null, lines);
     ctLabel.textContent = "Envoyé ✓";
     setTimeout(ctReset, 2600);
   });
@@ -383,7 +495,7 @@ if (nlForm) {
     nlForm.hidden = true;
     done.hidden = false;
     window.open(
-      "mailto:contact@luigi.ma?subject=Inscription newsletter Luigi&body=" +
+      "mailto:" + LOCATIONS[CURRENT_LOC].email + "?subject=Inscription newsletter Luigi " + locName() + "&body=" +
         encodeURIComponent(email),
       "_blank"
     );

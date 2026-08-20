@@ -17,7 +17,15 @@
   <div class="topbar">
     <div class="container topbar-inner">
       <span>Restauration chaude non-stop · 7j/7 de midi à minuit</span>
-      <span>Réservation : <a href="tel:+212522787171">05 22 78 71 71</a> <span class="flag"><span></span><span></span><span></span></span></span>
+      <span>Réservation : <a id="topPhoneLink" href="tel:+212522787171">05 22 78 71 71</a></span>
+      <span class="topbar-loc">
+        <label for="locSelect">Nos adresses</label>
+        <select id="locSelect" class="loc-select">
+          <option value="sidimaarouf">Luigi Sidi Maarouf</option>
+          <option value="maarif">Luigi Maarif</option>
+          <option value="darbouazza">Luigi Dar Bouazza</option>
+        </select>
+      </span>
     </div>
   </div>
 
@@ -89,15 +97,15 @@
         <div class="contact-map-wrap">
           <div class="contact-card">
             <h3>Téléphone</h3>
-            <p><a href="tel:+212522787171">05 22 78 71 71</a></p>
+            <p><a id="ctPhone" href="tel:+212522787171">05 22 78 71 71</a></p>
           </div>
           <div class="contact-card">
             <h3>WhatsApp</h3>
-            <p><a href="https://wa.me/212661489955">06 61 48 99 55</a></p>
+            <p><a id="ctWa" href="https://wa.me/212661489955">06 61 48 99 55</a></p>
           </div>
           <div class="contact-card">
             <h3>Email</h3>
-            <p><a href="mailto:contact@luigi.ma">contact@luigi.ma</a></p>
+            <p><a id="ctEmail" href="mailto:contact@luigi.ma">contact@luigi.ma</a></p>
           </div>
           <div class="contact-card">
             <h3>Horaires</h3>
@@ -105,10 +113,10 @@
           </div>
           <div class="contact-card">
             <h3>Adresse</h3>
-            <p>Rue 40, N° 4, Lot Mandarona, Sidi Maarouf, Casablanca</p>
+            <p id="ctAddr">Rue 40, N° 4, Lot Mandarona, Sidi Maarouf, Casablanca</p>
           </div>
           <div class="contact-map">
-            <iframe src="https://maps.google.com/maps?q=Luigi%20Sidi%20Maarouf%20Casablanca&amp;t=&amp;z=15&amp;ie=UTF8&amp;iwloc=&amp;output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Luigi Sidi Maarouf sur Google Maps"></iframe>
+            <iframe id="ctMap" src="https://maps.google.com/maps?q=Luigi%20Sidi%20Maarouf%20Casablanca&amp;t=&amp;z=15&amp;ie=UTF8&amp;iwloc=&amp;output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Luigi Sidi Maarouf sur Google Maps"></iframe>
           </div>
         </div>
       </div>
@@ -119,7 +127,7 @@
       <div class="footer-grid">
         <div class="footer-col">
           <img src="assets/img/logo.png" alt="Luigi" class="footer-logo">
-          <h3>Luigi Sidi Maarouf</h3>
+          <h3 id="footerName">Luigi Sidi Maarouf</h3>
           <span class="flag-stripe"><span></span><span></span><span></span></span>
           <p class="footer-about">Dans un cadre typiquement raffiné, le restaurant italien le plus réputé du Royaume : pizzas au four, pâtes fraîches maison, grillades et fruits de mer.</p>
         </div>
@@ -142,10 +150,10 @@
         </div>
         <div class="footer-col">
           <h4>Contact</h4>
-          <p class="footer-line">Téléphone : <a href="tel:+212522787171">05 22 78 71 71</a></p>
-          <p class="footer-line">WhatsApp : <a href="https://wa.me/212661489955" target="_blank" rel="noopener">06 61 48 99 55</a></p>
-          <p class="footer-line">Email : <a href="mailto:contact@luigi.ma">contact@luigi.ma</a></p>
-          <p class="footer-line">Rue 40, N° 4, Lot Mandarona, Sidi Maarouf, Casablanca</p>
+          <p class="footer-line">Téléphone : <a id="footerPhone" href="tel:+212522787171">05 22 78 71 71</a></p>
+          <p class="footer-line">WhatsApp : <a id="footerWa" href="https://wa.me/212661489955" target="_blank" rel="noopener">06 61 48 99 55</a></p>
+          <p class="footer-line">Email : <a id="footerEmail" href="mailto:contact@luigi.ma">contact@luigi.ma</a></p>
+          <p class="footer-line" id="footerAddr">Rue 40, N° 4, Lot Mandarona, Sidi Maarouf, Casablanca</p>
           <p class="footer-line">7j/7 · de midi à minuit, non-stop</p>
         </div>
       </div>
