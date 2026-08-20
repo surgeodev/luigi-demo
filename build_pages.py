@@ -257,10 +257,10 @@ index = render(
   <section class="addresses-section">
     <div class="container">
       <div class="section-head">
-        <span class="section-tag">Un seul design, trois adresses</span>
+        <span class="section-tag">Un seul design, sept adresses</span>
         <h2>La marque Luigi, unifiée</h2>
         <span class="flag-stripe"><span></span><span></span><span></span></span>
-        <p>Cliquez sur une adresse : le site s'adapte instantanément. C'est le principe d'une marque harmonisée — vos clients retrouvent la même expérience partout.</p>
+        <p>Les 7 adresses officielles de la chaîne que votre propre site référence : 2 sites WordPress de 2017, 1 site moderne (Dar Bouazza), et 4 adresses invisibles en ligne. Cliquez sur une adresse : le site s'adapte instantanément. C'est le principe d'une franchise harmonisée.</p>
       </div>
       <div class="addresses-grid">
         <div class="address-card" data-loc="sidimaarouf">
@@ -279,6 +279,35 @@ index = render(
           <h3>Luigi Dar Bouazza</h3>
           <p>Centre Mercato, Dar Bouazza</p>
           <p class="address-tel">05 22 33 06 24</p>
+          <p class="addr-status ok">Aujourd'hui : site moderne</p>
+          <button class="btn-add">Choisir cette adresse</button>
+        </div>
+        <div class="address-card" data-loc="palmier">
+          <h3>Luigi Palmier</h3>
+          <p>77, Rue Annassiri, Quartier Palmier, Casablanca</p>
+          <p class="address-tel">05 22 23 63 94</p>
+          <p class="addr-status bad">Aujourd'hui : site mort (luigipalmier.com)</p>
+          <button class="btn-add">Choisir cette adresse</button>
+        </div>
+        <div class="address-card" data-loc="dimare">
+          <h3>Luigi Di Mare</h3>
+          <p>Angle Bd Mohamed VI, Corniche, Tanger</p>
+          <p class="address-tel">06 61 48 99 55 (central)</p>
+          <p class="addr-status bad">Aujourd'hui : aucun site</p>
+          <button class="btn-add">Choisir cette adresse</button>
+        </div>
+        <div class="address-card" data-loc="mohammedia">
+          <h3>Luigi Mohammedia</h3>
+          <p>Bd Mohamed Zerktouni, Mohammedia</p>
+          <p class="address-tel">06 61 48 99 55 (central)</p>
+          <p class="addr-status bad">Aujourd'hui : aucun site</p>
+          <button class="btn-add">Choisir cette adresse</button>
+        </div>
+        <div class="address-card" data-loc="fes">
+          <h3>Luigi Fès</h3>
+          <p>Avenue Otman Ibn Affane, Fès</p>
+          <p class="address-tel">05 35 94 00 91</p>
+          <p class="addr-status bad">Aujourd'hui : aucun site</p>
           <button class="btn-add">Choisir cette adresse</button>
         </div>
       </div>

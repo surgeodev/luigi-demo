@@ -266,6 +266,19 @@ section[id] { scroll-margin-top: 90px; }
 .address-card .btn-add {
   margin-top: 14px;
 }
+.addr-status {
+  margin-top: 8px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.addr-status.ok {
+  color: var(--green);
+}
+.addr-status.bad {
+  color: var(--red);
+}
 
 /* ---------- Bande d'action ---------- */
 .cta-band { background: linear-gradient(120deg, var(--green), var(--green-deep)); }
