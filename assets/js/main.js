@@ -214,6 +214,11 @@ function render(cat) {
         ${desc}${badge}
         ${addControlHtml(item, key)}
       </div>`;
+    const cardImg = card.querySelector(".menu-card-img img");
+    if (cardImg) {
+      if (cardImg.complete && cardImg.naturalWidth) cardImg.classList.add("shown");
+      else cardImg.addEventListener("load", () => cardImg.classList.add("shown"), { once: true });
+    }
     grid.appendChild(card);
   });
 }
@@ -324,10 +329,30 @@ cartItems.addEventListener("click", (e) => {
   syncUI();
 });
 
+const orderLabel = document.getElementById("orderLabel");
+let orderArmed = false, orderTimer = null;
+function orderReset(sent) {
+  orderArmed = false;
+  orderLabel.textContent = "Commander sur WhatsApp";
+  cartOrder.classList.remove("armed");
+  if (sent) cartOrder.classList.add("sent");
+  setTimeout(() => cartOrder.classList.remove("sent"), 2200);
+}
 cartOrder.addEventListener("click", () => {
   if (!cartCount()) return;
+  if (!orderArmed) {
+    orderArmed = true;
+    orderLabel.textContent = "Confirmer la commande ?";
+    cartOrder.classList.add("armed");
+    clearTimeout(orderTimer);
+    orderTimer = setTimeout(orderReset, 7000);
+    return;
+  }
+  clearTimeout(orderTimer);
   const text = waText("Salam Luigi Sidi Maarouf, je souhaite commander :");
   window.open("https://wa.me/" + WA_NUMBER + "?text=" + encodeURIComponent(text), "_blank");
+  orderLabel.textContent = "Envoyé ✓";
+  orderReset(true);
 });
 
 cartFab.addEventListener("click", () => openCart());
