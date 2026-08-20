@@ -272,6 +272,7 @@ if (grid && tabs) {
     }
     syncUI();
     renderCat(currentCat);
+    updateDrawer();
   });
 
   renderCat("entrees");
@@ -294,6 +295,7 @@ if (grid && tabs) {
   }
 
   function openCart() {
+    updateDrawer();
     cartDrawer.classList.add("open");
     cartOverlay.classList.add("open");
   }
