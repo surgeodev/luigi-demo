@@ -462,3 +462,17 @@ resForm && resForm.addEventListener("submit", (e) => {
   resLabel.textContent = "Envoyé ✓ Quelle présence ?";
   setTimeout(resReset, 2600);
 });
+
+/* ---------- Newsletter (démo sans backend) ---------- */
+const nlForm = document.getElementById("newsletterForm");
+nlForm && nlForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const email = document.getElementById("newsletterEmail").value.trim();
+  if (!email) return;
+  const done = document.getElementById("newsletterDone");
+  const btn = document.getElementById("newsletterBtn");
+  btn.textContent = "Envoyé \u2713";
+  nlForm.hidden = true;
+  done.hidden = false;
+  window.open("mailto:contact@luigi.ma?subject=Inscription newsletter Luigi&body=" + encodeURIComponent(email), "_blank");
+});
