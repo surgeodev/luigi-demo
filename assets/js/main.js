@@ -286,8 +286,20 @@ if (grid && tabs) {
     return t;
   }
 
-  /* ---------- Codes promo ---------- */
-  const PROMOS = { LUIGI10: 10, PASTA15: 15, FAMILLE20: 20 };
+  /* ---------- Codes promo (synchronisés avec l'espace gérant) ---------- */
+  function loadPromos() {
+    try {
+      const raw = localStorage.getItem("luigi_promos");
+      if (raw) {
+        const p = JSON.parse(raw);
+        const o = {};
+        for (const k in p) if (p[k] && p[k].on) o[k] = p[k].pct;
+        if (Object.keys(o).length) return o;
+      }
+    } catch (e) {}
+    return { LUIGI10: 10, PASTA15: 15, FAMILLE20: 20 };
+  }
+  const PROMOS = loadPromos();
   let promo = null;
   const promoInput = document.getElementById("promoInput");
   const promoBtn = document.getElementById("promoBtn");
@@ -323,6 +335,12 @@ if (grid && tabs) {
   }
   if (promoBtn) promoBtn.addEventListener("click", applyPromo);
   if (promoInput) promoInput.addEventListener("keydown", (e) => { if (e.key === "Enter") applyPromo(); });
+
+  const buyerPromoHint = document.getElementById("promoHint");
+  if (buyerPromoHint) {
+    const codes = Object.keys(PROMOS).slice(0, 3).map((c) => c).join(", ");
+    buyerPromoHint.textContent = "Essayez : " + codes;
+  }
 
   function syncUI() {
     const count = cartCount();

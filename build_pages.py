@@ -3,7 +3,7 @@
 # Génère les 4 pages du site Luigi avec header/footer partagés
 import re
 
-CSS_VER = 10
+CSS_VER = 11
 
 HEAD = """<!DOCTYPE html>
 <html lang="fr">
@@ -93,6 +93,7 @@ FOOT = """  <footer class="footer">
           <p class="footer-line">Email : <a id="footerEmail" href="mailto:contact@luigi.ma">contact@luigi.ma</a></p>
           <p class="footer-line" id="footerAddr">Rue 40, N° 4, Lot Mandarona, Sidi Maarouf, Casablanca</p>
           <p class="footer-line">7j/7 · de midi à minuit, non-stop</p>
+          <p class="footer-line admin-link"><a href="admin.html">Espace gérant (démo)</a></p>
         </div>
       </div>
       <p class="footer-copy">Luigi Sidi Maarouf — Casablanca · Refonte démo</p>
@@ -104,14 +105,83 @@ __EXTRA_SCRIPTS__  <script src="assets/js/main.js?v=__CSS_VER__"></script>
 </html>
 """
 
-def render(title, desc, body, home="", menu="", resa="", contact="", menu_pg=False):
+def render(title, desc, body, home="", menu="", resa="", contact="", menu_pg=False, admin_pg=False):
     html = HEAD + body + FOOT
     html = html.replace("__TITLE__", title).replace("__DESC__", desc)
     extra = '<script src="assets/js/menu_data.js?v=%d"></script>' % CSS_VER if menu_pg else ""
+    if admin_pg: extra = '<script src="assets/js/admin.js?v=%d"></script>' % CSS_VER
     html = html.replace("__EXTRA_SCRIPTS__", extra)
     html = html.replace("__CSS_VER__", str(CSS_VER))
     html = html.replace("__HOME__", home).replace("__MENU__", menu).replace("__RESA__", resa).replace("__CONTACT__", contact)
     return html
+
+ADMIN_BODY = """
+  <section class="page-head">
+    <div class="container">
+      <span class="section-tag">Tableau de bord</span>
+      <h1>Espace gérant</h1>
+      <p>Démo sans serveur : les modifications (commandes, codes promo) restent dans votre navigateur. En production, elles seraient publiées pour tous via Decap CMS — toujours sans serveur.</p>
+    </div>
+  </section>
+
+  <section class="admin-section">
+    <div class="container">
+      <div id="adminGate" class="admin-gate">
+        <h2>Accès gérant</h2>
+        <form id="adminLogin" class="admin-login">
+          <input class="co-input" type="password" id="adminPass" placeholder="Mot de passe démo : LUIGI2024" autocomplete="off">
+          <button type="submit" class="btn btn-primary btn-block">Afficher le tableau</button>
+        </form>
+      </div>
+
+      <div id="adminPanel" hidden>
+        <div class="admin-kpis">
+          <div class="admin-kpi"><span class="kpi-num" id="kpiOrders">0</span><span class="kpi-label">Commandes en cours</span></div>
+          <div class="admin-kpi"><span class="kpi-num" id="kpiCa">0 DH</span><span class="kpi-label">Chiffre d'affaires</span></div>
+          <div class="admin-kpi"><span class="kpi-num" id="kpiPromos">0</span><span class="kpi-label">Codes promo actifs</span></div>
+          <div class="admin-kpi"><span class="kpi-num" id="kpiBaseline">96%</span><span class="kpi-label">Commandes WhatsApp → cuisine</span></div>
+        </div>
+
+        <div class="admin-cols">
+          <div class="admin-card">
+            <h3>Commandes en cours</h3>
+            <p class="admin-note">Cliquez sur un statut pour le faire avancer : Nouvelle → En préparation → En livraison → Livrée.</p>
+            <div id="ordersList" class="orders-list"></div>
+            <form id="orderAdd" class="admin-add">
+              <input class="co-input" id="oName" placeholder="Nom du client">
+              <input class="co-input" id="oTotal" placeholder="Total DH" inputmode="numeric">
+              <select class="co-input" id="oType">
+                <option value="Livraison">Livraison</option>
+                <option value="À emporter">À emporter</option>
+                <option value="Sur place">Sur place</option>
+              </select>
+              <button class="btn btn-primary" type="submit">Ajouter</button>
+            </form>
+          </div>
+
+          <div class="admin-card">
+            <h3>Codes promo</h3>
+            <p class="admin-note">Les changements s'appliquent immédiatement au panier du site (même navigateur).</p>
+            <div id="promosList" class="promos-list"></div>
+            <form id="promoAdd" class="admin-add">
+              <input class="co-input" id="pCode" placeholder="CODE (ex : LUIGI10)" maxlength="16" style="text-transform:uppercase">
+              <input class="co-input" id="pPct" placeholder="% remise" inputmode="numeric">
+              <button class="btn btn-primary" type="submit">Créer</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+"""
+
+# ---------- PAGE ADMIN ----------
+admin = render(
+    "Espace gérant — Luigi | Tableau de bord, commandes, codes promo",
+    "Espace de gestion démo du site Luigi : suivi des commandes, codes promo. Sans serveur, sans backend.",
+    body=ADMIN_BODY,
+    admin_pg=True,
+)
 
 # ---------- PAGE ACCUEIL ----------
 index = render(
@@ -601,7 +671,7 @@ contact = render(
   </section>
 """)
 
-for name, html in [("index.html", index), ("menu.html", menu), ("reservation.html", resa), ("contact.html", contact)]:
+for name, html in [("index.html", index), ("menu.html", menu), ("reservation.html", resa), ("contact.html", contact), ("admin.html", admin)]:
     with open(name, "w", encoding="utf-8") as f:
         f.write(html)
     print(name, "ok", len(html))
