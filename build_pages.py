@@ -3,7 +3,7 @@
 # Génère les 4 pages du site Luigi avec header/footer partagés
 import re
 
-CSS_VER = 7
+CSS_VER = 8
 
 HEAD = """<!DOCTYPE html>
 <html lang="fr">
@@ -44,14 +44,16 @@ HEAD = """<!DOCTYPE html>
     <div class="container header-inner">
       <a href="index.html" class="logo">
         <img src="assets/img/logo.png" alt="Luigi">
+        <span class="logo-word">Luigi<em>ristorante italiano</em></span>
       </a>
-      <nav class="nav" id="nav">
+      <nav class="nav" id="nav" aria-label="Navigation principale">
         <a href="index.html" class="nav-link__HOME__">Accueil</a>
         <a href="menu.html" class="nav-link__MENU__">Le Menu</a>
         <a href="reservation.html" class="nav-link__RESA__">Réservation</a>
         <a href="contact.html" class="nav-link__CONTACT__">Contact</a>
+        <a href="menu.html" class="btn btn-primary nav-cta">Commander</a>
       </nav>
-      <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false">
+      <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false" aria-controls="nav">
         <span></span><span></span><span></span>
       </button>
     </div>
@@ -97,14 +99,16 @@ FOOT = """  <footer class="footer">
     </div>
   </footer>
 
-  <script src="assets/js/main.js?v=__CSS_VER__"></script>
+__EXTRA_SCRIPTS__  <script src="assets/js/main.js?v=__CSS_VER__"></script>
 </body>
 </html>
 """
 
-def render(title, desc, body, home="", menu="", resa="", contact=""):
+def render(title, desc, body, home="", menu="", resa="", contact="", menu_pg=False):
     html = HEAD + body + FOOT
     html = html.replace("__TITLE__", title).replace("__DESC__", desc)
+    extra = '<script src="assets/js/menu_data.js?v=%d"></script>' % CSS_VER if menu_pg else ""
+    html = html.replace("__EXTRA_SCRIPTS__", extra)
     html = html.replace("__CSS_VER__", str(CSS_VER))
     html = html.replace("__HOME__", home).replace("__MENU__", menu).replace("__RESA__", resa).replace("__CONTACT__", contact)
     return html
@@ -334,6 +338,7 @@ index = render(
 menu = render(
     "Menu — Luigi | Pizzas, Pâtes fraîches, Grillades en ligne",
     "Le menu complet du Luigi Sidi Maarouf : plus de 140 plats italiens avec photos et prix. Commandez en ligne, payez par carte ou à la livraison.",
+    menu_pg=True,
     menu=' active',
     body="""
   <section class="page-head">
