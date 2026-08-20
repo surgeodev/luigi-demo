@@ -253,8 +253,18 @@ function waText(prefix) {
     })
     .join("\n");
   const total = cartTotalPrice();
-  return prefix + "\n" + lines + (total ? `\n\nTotal : ${total} DH` : "");
+  let pay = "";
+  const payBtn = document.querySelector(".pay-choice.active");
+  if (payBtn) pay = "\n\nPaiement : " + payBtn.dataset.pay;
+  return prefix + "\n" + lines + (total ? `\n\nTotal : ${total} DH` : "") + pay;
 }
+
+document.querySelectorAll(".pay-choice").forEach((b) =>
+  b.addEventListener("click", () => {
+    document.querySelectorAll(".pay-choice").forEach((x) => x.classList.remove("active"));
+    b.classList.add("active");
+  })
+);
 
 function syncUI() {
   const count = cartCount();
