@@ -194,6 +194,32 @@ function sendLoc(subject, greet, lines) {
   }
 }
 
+/* ============ Panneau Ouvert / Fermé (11h → 01h) ============ */
+(function () {
+  const OPEN_H = 11, CLOSE_H = 1;
+  function isOpenNow(d) {
+    const h = d.getHours() + d.getMinutes() / 60;
+    return h >= OPEN_H || h < CLOSE_H;
+  }
+  function updateOpenStatus() {
+    const badges = document.querySelectorAll(".open-badge");
+    if (!badges.length) return;
+    const open = isOpenNow(new Date());
+    badges.forEach((b) => {
+      b.classList.toggle("is-open", open);
+      b.classList.toggle("is-closed", !open);
+      const txt = b.querySelector(".open-txt");
+      if (txt) {
+        txt.textContent = open
+          ? "Ouvert maintenant · ferme à 01h00"
+          : "Fermé · réouvre à 11h00";
+      }
+    });
+  }
+  updateOpenStatus();
+  setInterval(updateOpenStatus, 30000);
+})();
+
 /* ============ Panier (page menu) ============ */
 const grid = document.getElementById("menuGrid");
 const cartFab = document.getElementById("cartFab");

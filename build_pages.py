@@ -3,7 +3,7 @@
 # Génère les 4 pages du site Luigi avec header/footer partagés
 import re
 
-CSS_VER = 11
+CSS_VER = 12
 
 HEAD = """<!DOCTYPE html>
 <html lang="fr">
@@ -23,7 +23,7 @@ HEAD = """<!DOCTYPE html>
 
   <div class="topbar">
     <div class="container topbar-inner">
-      <span>Restauration chaude non-stop · 7j/7 de midi à minuit</span>
+      <span>Restauration chaude non-stop · 7j/7 de 11h à 01h</span>
       <span>Réservation : <a id="topPhoneLink" href="tel:+212522787171">05 22 78 71 71</a></span>
       <span class="topbar-loc">
         <label for="locSelect">Nos adresses</label>
@@ -92,7 +92,7 @@ FOOT = """  <footer class="footer">
           <p class="footer-line">WhatsApp : <a id="footerWa" href="https://wa.me/212661489955" target="_blank" rel="noopener">06 61 48 99 55</a></p>
           <p class="footer-line">Email : <a id="footerEmail" href="mailto:contact@luigi.ma">contact@luigi.ma</a></p>
           <p class="footer-line" id="footerAddr">Rue 40, N° 4, Lot Mandarona, Sidi Maarouf, Casablanca</p>
-          <p class="footer-line">7j/7 · de midi à minuit, non-stop</p>
+          <p class="footer-line">7j/7 · de 11h à 01h, non-stop</p>
           <p class="footer-line admin-link"><a href="admin.html">Espace gérant (démo)</a></p>
         </div>
       </div>
@@ -186,7 +186,7 @@ admin = render(
 # ---------- PAGE ACCUEIL ----------
 index = render(
     "Luigi — Restaurant italien | Pizzas, Pâtes fraîches, Grillades",
-    "Luigi : pizzas, pâtes fraîches, viandes grillées, fruits de mer. Chaîne italienne au Maroc — 7 adresses, restauration non-stop de midi à minuit. Commandez en ligne.",
+    "Luigi : pizzas, pâtes fraîches, viandes grillées, fruits de mer. Chaîne italienne au Maroc — 7 adresses, restauration non-stop de 11h à 01h. Commandez en ligne.",
     home=' active',
     body="""
   <section class="hero" id="accueil">
@@ -195,8 +195,9 @@ index = render(
     </div>
     <div class="hero-content">
       <span class="hero-badge"><span id="locBadge">Ristorante Italiano · Sidi Maarouf, Casablanca</span></span>
+      <span class="open-badge" id="openBadge"><span class="open-dot"></span><span class="open-txt">Vérification…</span></span>
       <h1>Luigi <span id="locName">Sidi Maarouf</span></h1>
-      <p class="hero-tag">Pizzas · Pâtes fraîches maison · Grillades · Fruits de mer — <strong>7j/7 · midi à minuit</strong></p>
+      <p class="hero-tag">Pizzas · Pâtes fraîches maison · Grillades · Fruits de mer — <strong>7j/7 · 11h à 01h</strong></p>
       <div class="hero-cta">
         <a href="menu.html" class="btn btn-primary">
           <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M19 7h-3V5a4 4 0 0 0-8 0v2H5a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1Zm-9-2a2 2 0 0 1 4 0v2h-4V5Zm8 13H6V9h12v9Zm-8-10a1 1 0 1 0 2 0 1 1 0 0 0-2 0Z"/></svg>
@@ -223,7 +224,7 @@ index = render(
 
   <section class="info-strip">
     <div class="container info-grid">
-      <div class="info-item"><strong>Non-stop</strong><span>de midi à minuit, 7j/7</span></div>
+      <div class="info-item"><strong>Non-stop</strong><span>de 11h à 01h, 7j/7</span></div>
       <div class="info-item"><strong>Panier en ligne</strong><span>commande en quelques clics</span></div>
       <div class="info-item"><strong>Paiement carte</strong><span>en ligne ou à la livraison</span></div>
       <div class="info-item"><strong>Livraison</strong><span>à domicile ou au bureau</span></div>
@@ -433,7 +434,7 @@ menu = render(
       </div>
       <div class="menu-grid" id="menuGrid"></div>
       <div class="menu-note">
-        <strong>Restauration chaude non-stop</strong> — cuisine ouverte de midi à minuit, livraison à domicile ou au bureau
+        <strong>Restauration chaude non-stop</strong> — cuisine ouverte de 11h à 01h, livraison à domicile ou au bureau
       </div>
     </div>
   </section>
@@ -498,7 +499,8 @@ resa = render(
       <span class="section-tag">Réserver une table</span>
       <h1>Le Planning Luigi</h1>
       <span class="flag-stripe"><span></span><span></span><span></span></span>
-      <p>Le même planning que le restaurant — confirmation en quelques minutes sur WhatsApp.</p>
+      <span class="open-badge" id="openBadge"><span class="open-dot"></span><span class="open-txt">Vérification…</span></span>
+      <p>Ouvert 7j/7 de 11h à 01h — confirmation en quelques minutes sur WhatsApp.</p>
     </div>
   </section>
 
@@ -572,7 +574,7 @@ __SLOTS__
           </div>
           <div class="contact-card">
             <h3>Horaires</h3>
-            <p>7j/7 — de midi à minuit, non-stop</p>
+            <p>7j/7 — de 11h à 01h, non-stop</p>
           </div>
           <div class="reservation-why">
             <h3>Réservation instantanée</h3>
@@ -656,7 +658,7 @@ contact = render(
           </div>
           <div class="contact-card">
             <h3>Horaires</h3>
-            <p>7j/7 — de midi à minuit, non-stop</p>
+            <p>7j/7 — de 11h à 01h, non-stop</p>
           </div>
           <div class="contact-card">
             <h3>Adresse</h3>
