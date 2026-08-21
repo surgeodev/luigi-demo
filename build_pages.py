@@ -3,7 +3,7 @@
 # Génère les 4 pages du site Luigi avec header/footer partagés
 import re
 
-CSS_VER = 12
+CSS_VER = 13
 
 HEAD = """<!DOCTYPE html>
 <html lang="fr">
